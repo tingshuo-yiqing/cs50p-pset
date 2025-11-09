@@ -2,6 +2,15 @@
 .vscode/
 
 __pycache__/
+# pytest缓存
+.pytest_cache/
+.coverage
+htmlcov/
+
+# 测试报告
+.report/
+.tox/
+
 *.pyc
 *.pyo
 *.pyd

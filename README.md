@@ -1,3 +1,10 @@
+## PowerShellpython激活虚拟环境
+
+```powershell
+./.venv/Scripts/Activate.ps1
+
+deactivate
+```
 ## Linux下安装python库
 
 使用linux环境`pip`安装库时可能会被阻止，因为Python 现在阻止直接使用 pip 安装系统级别的包，以防止破坏系统依赖。

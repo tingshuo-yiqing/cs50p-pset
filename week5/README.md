@@ -48,3 +48,44 @@ from utils import add, upper
 
 ## pytest库
 
+1. pytest.raise()的用法
+
+用于测试代码会不会抛出指定的异常。
+
+通常用于验证你的函数在错误的输入下能否进行正确的报错
+
+```python
+import pytest
+
+def test_example():
+    with pytest.raises(ValueError):
+        int("abc")  # 这里会抛出 ValueError
+```
+如果抛出了对应的异常则，测试通过否则失败
+
+
+## isinstance函数
+
+`isinstance(obj, type)` 用于判断一个对象是否是某种类型或其子类的实例。
+
+### 用途
+
+常用于**函数的独立性**，确保这个函数不依赖于其它模块也可以正常处理不合法的输入
+
+`raise`关键字
+
+1. 类型检查
+
+```python
+def square(x):
+    if not isinstance(x, (int, float)):
+        raise TypeError("x must be a number")
+    return x * x
+```
+
+2. 测试时验证返回类型
+   
+```python
+def test_square_type():
+    assert isinstance(square(3), int)
+```

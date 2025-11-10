@@ -7,8 +7,7 @@ try:
 except EOFError:
     ...
 ``` 
-捕获`Ctrl + C`的`KeyboardInterrupt`
-捕获除法的`ZeroDivisionError`
+捕获`Ctrl + C`的`KeyboardInterrupt`和捕获除0的`ZeroDivisionError`
 
 
 2. 常见格式方法

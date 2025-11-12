@@ -10,6 +10,7 @@ def convert(fraction):
 
         if b == 0:
             raise ZeroDivisionError
+            
         if a < 0 or b < 0 or a > b:
             #! 这里 1/0的话会进入ValueError，但是它期望的是ZeroDivisionError
             raise ValueError # 不合法数字

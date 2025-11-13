@@ -1,34 +1,14 @@
 import csv
 from random import shuffle
+from module import Word
+from progress import save_progress, load_progress
 
-FILENAME = "writing.csv"
+FILE_JSON = "words.json"
 
-class Word:
-    def __init__(self, word, Chinese):
-        self.word = word
-        self.Chinese = Chinese
-    
-    def __str__(self):
-        return f"{self.Chinese}: {self.word}"
-    
-
-def load_file(filename):
-    words = []
-    with open(filename, "r", encoding="utf-8") as file:
-        reader = csv.DictReader(file)
-        for row in reader:
-            w = Word(row["word"], row["Chinese"])
-            words.append(w)
+def load_file():
+    words = load_progress(FILE_JSON)
     return words
 
-
-# 暂时不用管
-def append_word(filename, Word):
-    with open(filename, "a", newline="", encoding="utf-8") as file:
-        writer = csv.writer(file)
-        writer = csv.DictWriter(file, fieldnames=["word", "Chinese"])
-        # 现在默认有标题
-        writer.writerow({"word":Word.word, "Chinese":Word.Chinese})
 
 def input_new_word():
     word = input("请输入单词: ").strip()
@@ -40,25 +20,27 @@ def input_new_word():
         content()
         return
     new_word = Word(word, chinese)
-    append_word(FILENAME, new_word)
+    words = load_file()
+    words.append(new_word)
+    save_progress(words, FILE_JSON)
     print(f"{new_word} 添加成功!")
 
 
 def user_input(word: Word):
-    w = input(f"{word.Chinese}: ")
-    return w
+    return input(f"{word.Chinese}: ")
 
 
 def practice():
-    words = load_file(FILENAME)
+    words = load_file()
     shuffle(words)
     size = len(words)
     for i, word in enumerate(words):
         print(f"本次共有{size}个单词，剩余{size-i}")
         ans = word.word
         while True:
-            user_in = user_input(word)    
+            user_in = user_input(word).lower()  
             if user_in == ans:
+                word.correct_count += 1
                 print("🎉🎉🎉")
                 break
             elif user_in == "next":
@@ -66,18 +48,24 @@ def practice():
                 break
             elif user_in == "break":
                 print(f"\n===========已退出===========")
+                save_progress(words, FILE_JSON)
                 return
             elif user_in == "help":
                 content()
                 return 
+            else:
+                word.error_count += 1
+    save_progress(words, FILE_JSON)
     print("🎉🎉🎉已全部复习完成🎉🎉🎉")
+
 
 def content():
     print("===========开始今天的学习叭===========")
     print("1.练习模式请输入practice")
     print("2.添加新单词(word, Chinese)请输入add")
     print("3.如果需要帮助输入help")
-    print("4.退出练习请输入break或Ctrl + C")
+    print("4.退出练习请输入exit或Ctrl + C")
+
 
 def main():
     content()
@@ -90,7 +78,8 @@ def main():
                 input_new_word()
             elif pattern == "help":
                 content()
-            elif pattern == "break":
+                continue
+            elif pattern == "exit":
                 return
 
     except ValueError:

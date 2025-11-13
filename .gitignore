@@ -1,6 +1,8 @@
 .idea/
 .vscode/
 
+*.json
+
 __pycache__/
 # pytest缓存
 .pytest_cache/

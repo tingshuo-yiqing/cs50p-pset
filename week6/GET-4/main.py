@@ -38,7 +38,7 @@ def practice():
         print(f"本次共有{size}个单词，剩余{size-i}")
         ans = word.word
         while True:
-            user_in = user_input(word).lower()  
+            user_in = user_input(word).lower().strip()
             if user_in == ans:
                 word.correct_count += 1
                 print("🎉🎉🎉")

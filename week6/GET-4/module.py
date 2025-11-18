@@ -17,7 +17,7 @@ class Word:
             "error_count": self.error_count
         }
     
-    @classmethod   #* 类方法是什么？为什么用类方法
+    @classmethod   #* 类方法是什么？为什么用类方法：更清晰便捷
     def from_dict(cls, data):
         """dict -> Word"""
         return cls(

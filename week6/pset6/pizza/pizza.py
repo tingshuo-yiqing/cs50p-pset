@@ -1,5 +1,6 @@
 import csv
 import sys
+import os
 from tabulate import tabulate
 
 
@@ -27,6 +28,8 @@ def main():
         sys.exit("Too many command-line arguments")
     else:
         if not argv[1].lower().endswith(".csv"):
+        # name, ext = os.path.splitext(argv[1])
+        # if ext.lower() != ".csv":
             sys.exit("Not a CSV file")
     
     filename = argv[1]

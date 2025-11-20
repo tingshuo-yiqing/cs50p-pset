@@ -1,12 +1,13 @@
 import sys
-from datetime import date
 import inflect
+from datetime import date
+
 p = inflect.engine()
 
 def check_birthday(user_in):
     """ 验证逻辑 """
     try:
-        return date.fromisoformat(user_in) 
+        return date.fromisoformat(user_in)
     except ValueError:
         sys.exit("Invalid date")
 

@@ -8,6 +8,7 @@ __pycache__/
 .pytest_cache/
 .coverage
 htmlcov/
+.mypy_cache
 
 # 测试报告
 .report/

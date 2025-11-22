@@ -19,10 +19,11 @@ class Circle:
     def area(self):
         return self.radius ** 2 * pi  # 将求area的方法变成属性，此时area随radius的变化而变化
 
-s = Circle(-1)
-
+s = Circle(1)
+print(s.__dict__)
 print(s.area)
 
 s.radius = 2
+print(s.__dict__)
 
 print(s.area)

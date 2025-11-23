@@ -24,7 +24,6 @@ class Student:
     def __str__(self) -> str:
         return "这是一个__str__，具体懒得写了"
     
-   
 student = Student(
     "tingshuo",
     datetime.now(),

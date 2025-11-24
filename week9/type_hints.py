@@ -1,5 +1,5 @@
-from __future__ import annotations
-from typing import Literal
+from __future__ import annotations  
+from typing import Literal, Iterable
 from datetime import datetime
 
 
@@ -23,7 +23,8 @@ class Student:
 
     def __str__(self) -> str:
         return "这是一个__str__，具体懒得写了"
-    
+
+
 student = Student(
     "tingshuo",
     datetime.now(),
@@ -33,3 +34,11 @@ student = Student(
 )
 
 print(student)
+
+
+def my_sum(nums: Iterable[int]) -> int:
+    return sum(nums)
+
+
+print(my_sum([1, 2, 3, 4, 5]))
+print(my_sum((1, 2, 3, 4, 5)))

@@ -8,7 +8,17 @@ gemini_api = os.getenv("GEMINI_API_KEY")
 if not gemini_api:
     raise ValueError("gemini_api不存在，请检查.env文件")
 
-client = genai.Client(api_key=gemini_api)
+
+def api_call(prompt: str) -> str | None:
+    """api调用函数"""
+    client = genai.Client(api_key=gemini_api) # 避免全局初始化
+    try:
+        response = client.models.generate_content(
+            model="gemini-2.5-flash", contents=prompt
+        )
+        return response.text
+    except ValueError as e:
+        return f"AI 大脑暂时短路了: {e}"
 
 
 def get_advise(city: str, weather_data: dict) -> str | None:
@@ -19,10 +29,15 @@ def get_advise(city: str, weather_data: dict) -> str | None:
         "尽量输出text文本，而不是markdown"
     )
 
-    try:
-        response = client.models.generate_content(
-            model="gemini-2.5-flash", contents=prompt
-        )
-        return response.text
-    except ValueError as e:
-        return f"AI 大脑暂时短路了: {e}"
+    return api_call(prompt)
+
+
+def get_compare_advise(table_data: list[list[str | float]]):
+    """将对比数据发给Gemini并返回分析结果"""
+
+    prompt = (
+        f"请你根据 {table_data} 这些数据，用幽默风趣的语气，用尽量简短的话给我分析一下这两个城市的天气情况"
+        "尽量输出text文本，而不是markdown"
+    )
+
+    return api_call(prompt)

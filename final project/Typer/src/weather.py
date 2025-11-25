@@ -34,6 +34,19 @@ def fetch_city_data(url: str, params: dict[str, str], city: str):
         raise RuntimeError("An unknown error occurred in the network connection") from e
 
 
+def clean_data(data: dict) -> dict:
+    """处理返回的天气数据，纯逻辑便于测试"""
+    return {
+        "Name": data["name"],
+        "Main": data["weather"][0]["main"],
+        "Description": data["weather"][0]["description"],
+        "Temp": data["main"]["temp"],
+        "Max_temp": data["main"]["temp_max"],
+        "Min_temp": data["main"]["temp_min"],
+        "Humidity": data["main"]["humidity"],
+    }
+
+
 def load_weather(city: str) -> dict:
     """构建参数和解析数据"""
     if not weather_api:
@@ -49,13 +62,4 @@ def load_weather(city: str) -> dict:
 
     data = response.json()
 
-    weather_info = {
-        "Main": data["weather"][0]["main"],
-        "Description": data["weather"][0]["description"],
-        "Temp": data["main"]["temp"],
-        "Max_temp": data["main"]["temp_max"],
-        "Min_temp": data["main"]["temp_min"],
-        "Humidity": data["main"]["humidity"],
-    }
-
-    return weather_info
+    return clean_data(data)
